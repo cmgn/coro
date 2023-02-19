@@ -37,18 +37,18 @@ int main()
 {
 	struct t *root = 0;
 	int64_t vals[] = { 4, 2, 1, 3, 6, 5, 7 };
-	struct t nodes[sizeof(vals) / sizeof(*vals)] = {0};
+	struct t nodes[sizeof(vals) / sizeof(*vals)] = { 0 };
 	for (int i = 0; i < sizeof(vals) / sizeof(*vals); i++) {
 		nodes[i].val = vals[i];
 		insert(&root, &nodes[i]);
 	}
-	struct coro c = {0};
+	struct coro c = { 0 };
 	void *stack = calloc(1, STACK_SIZE);
 	if (!stack) {
 		perror("calloc");
 		return 1;
 	}
-	coro_init(&c, stack, STACK_SIZE, (coro_func) iterator, root);
+	coro_init(&c, stack, STACK_SIZE, (coro_func)iterator, root);
 	int64_t n = (int64_t)coro_resume(&c);
 	while (!coro_done(&c)) {
 		printf("%ld\n", n);
