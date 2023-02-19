@@ -1,4 +1,4 @@
-CCFLAGS += -Wall -Werror -g
+CCFLAGS += -Wall -Werror
 OBJECTS += yield.o coro.o
 
 %.o: %.s

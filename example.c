@@ -24,15 +24,13 @@ void insert(struct t **root, struct t *new)
 	*curr = new;
 }
 
-void iterator(struct coro *c, void *arg)
+void iterator(struct coro *c, struct t *t)
 {
-	struct t *t = (struct t *)arg;
-	if (!t) {
-		return;
+	if (t) {
+		iterator(c, t->left);
+		coro_yield(c, (void *)t->val);
+		iterator(c, t->right);
 	}
-	iterator(c, t->left);
-	coro_yield(c, (void *)t->val);
-	iterator(c, t->right);
 }
 
 int main()
@@ -50,7 +48,7 @@ int main()
 		perror("calloc");
 		return 1;
 	}
-	coro_init(&c, stack, STACK_SIZE, iterator, root);
+	coro_init(&c, stack, STACK_SIZE, (coro_func) iterator, root);
 	int64_t n = (int64_t)coro_resume(&c);
 	while (!coro_done(&c)) {
 		printf("%ld\n", n);
