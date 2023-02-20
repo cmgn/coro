@@ -16,9 +16,9 @@ void coro_init(struct coro *c, void *stack, uint64_t stacksz, coro_func func,
 	       void *arg)
 {
 	c->stack = (void *)stack;
-	c->rsp = (uint64_t)stack + stacksz;
 	c->rbp = c->rbp;
-	c->rip = (uint64_t)coro_entrypoint;
+	*(uint64_t *)(stack + stacksz - 8) = (uint64_t)coro_entrypoint;
+	c->rsp = (uint64_t)stack + stacksz - 8;
 	coro_yield(c, 0);
 	coro_yield(c, func);
 	coro_yield(c, arg);

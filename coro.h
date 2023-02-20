@@ -11,7 +11,6 @@ struct coro {
 	uint64_t r13;
 	uint64_t r14;
 	uint64_t r15;
-	uint64_t rip;
 	void *stack;
 	uint8_t done;
 };

@@ -31,13 +31,6 @@ coro_yield:
 	movq %r15, 48(%rdi)
 	movq %r8, %r15
 
-	# Now the tricky bit...
-	mov 56(%rdi), %r8
-	lea (%rip), %r9
-	add $10, %r9
-	movq %r9, 56(%rdi)
-	pushq %r8
-
 	movq %rsi, %rax
 
 	ret
