@@ -21,7 +21,7 @@ void coro_init(struct coro *c, void *stack, uint32_t stacksz, coro_func func,
 	*(uint64_t *)(stack + stacksz - 8) = (uint64_t)coro_entrypoint;
 	c->rsp = (uint64_t)stack + stacksz - 8;
 #elif defined(__arm__)
-	c->sp = (uint32_t)stack + stacksz - 16;
+	c->sp = (uint32_t)stack + stacksz;
 	c->lr = (uint32_t)coro_entrypoint;
 #else
 #error "unknown architecture"
