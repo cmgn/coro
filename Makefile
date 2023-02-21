@@ -1,5 +1,5 @@
-CCFLAGS += -g
-OBJECTS += yield_x64.o yield_arm.o coro.o
+YIELD_OBJECTS := $(patsubst %.s,%.o,$(wildcard yield_*.s))
+OBJECTS += $(YIELD_OBJECTS) coro.o
 
 %.o: %.s
 	$(CC) $(CCFLAGS) -o $@ -c -x assembler-with-cpp $<
