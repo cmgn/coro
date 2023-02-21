@@ -15,7 +15,8 @@ void insert(struct t **root, struct t *new)
 {
 	struct t **curr = root;
 	while (*curr) {
-		if (new->val < (*curr)->val) { curr = &(*curr)->left;
+		if (new->val < (*curr)->val) {
+			curr = &(*curr)->left;
 		} else {
 			curr = &(*curr)->right;
 		}
