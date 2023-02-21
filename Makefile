@@ -1,8 +1,8 @@
-CCFLAGS += -Wall -Werror
-OBJECTS += yield.o coro.o
+CCFLAGS += -g
+OBJECTS += yield_x64.o yield_arm.o coro.o
 
 %.o: %.s
-	as -o $@ $<
+	$(CC) $(CCFLAGS) -o $@ -c -x assembler-with-cpp $<
 
 %.o: %.c
 	$(CC) $(CCFLAGS) -c -o $@ $<
@@ -10,7 +10,7 @@ OBJECTS += yield.o coro.o
 libcoro.o: $(OBJECTS)
 	ld -r $(OBJECTS) -o $@
 
-example: libcoro.o
+example: libcoro.o example.c
 	$(CC) $(CCFLAGS) -o example example.c libcoro.o
 
 .PHONY: clean

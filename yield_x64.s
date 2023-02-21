@@ -1,3 +1,5 @@
+#if defined(__x86_64__)
+
 .text
 
 .global coro_yield
@@ -34,3 +36,5 @@ coro_yield:
 	movq %rsi, %rax
 
 	ret
+
+#endif
