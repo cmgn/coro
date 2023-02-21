@@ -20,14 +20,13 @@ void coro_init(struct coro *c, void *stack, uint32_t stacksz, coro_func func,
 	c->rbp = c->rbp;
 	*(uint64_t *)(stack + stacksz - 8) = (uint64_t)coro_entrypoint;
 	c->rsp = (uint64_t)stack + stacksz - 8;
-	coro_yield(c, 0);
 #elif defined(__arm__)
 	c->sp = (uint32_t)stack + stacksz - 16;
 	c->lr = (uint32_t)coro_entrypoint;
-	coro_yield(c, c);
 #else
 #error "unknown architecture"
 #endif
+	coro_yield(c, c);
 	coro_yield(c, func);
 	coro_yield(c, arg);
 }
