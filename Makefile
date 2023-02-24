@@ -7,7 +7,7 @@ OBJECTS += $(YIELD_OBJECTS) coro.o
 %.o: %.c
 	$(CC) $(CCFLAGS) -c -o $@ $<
 
-libcoro.o: $(OBJECTS)
+libcoro.a: $(OBJECTS)
 	ld -r $(OBJECTS) -o $@
 
 example: libcoro.o example.c
