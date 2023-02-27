@@ -15,4 +15,4 @@ example: libcoro.o example.c
 
 .PHONY: clean
 clean:
-	$(RM) $(OBJECTS) libcoro.o example
+	$(RM) $(OBJECTS) libcoro.a example
