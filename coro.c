@@ -17,8 +17,9 @@ void coro_init(struct coro *c, void *stack, uint32_t stacksz, coro_func func,
 {
 	c->stack = (void *)stack;
 #if defined(__x86_64__)
-	*(uint64_t *)(stack + stacksz - 8) = (uint64_t)coro_entrypoint;
-	c->rsp = (uint64_t)stack + stacksz - 8;
+	// Stack must be aligned on a 16-byte boundary for SSE instructions.
+	*(uint64_t *)(stack + stacksz - 16) = (uint64_t)coro_entrypoint;
+	c->rsp = (uint64_t)stack + stacksz - 16;
 #elif defined(__arm__)
 	c->sp = (uint32_t)stack + stacksz;
 	c->lr = (uint32_t)coro_entrypoint;
